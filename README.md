@@ -2,12 +2,6 @@
 
 React frontend for the Smart Recipe Meal Planner with Nutritional Analysis application.
 
-## Student Information
-
-- **Student Name:** Vishvaksen Machana
-- **Student ID:** 25173421
-- **Module:** Cloud DevOpsSec (H9CDOS)
-
 ## Tech Stack
 
 - **Framework:** React 18 with Vite
