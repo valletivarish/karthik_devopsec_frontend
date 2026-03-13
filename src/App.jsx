@@ -12,7 +12,6 @@ import IngredientList from './components/Ingredients/IngredientList';
 import IngredientForm from './components/Ingredients/IngredientForm';
 import MealPlanList from './components/MealPlans/MealPlanList';
 import MealPlanForm from './components/MealPlans/MealPlanForm';
-import DietaryProfileForm from './components/DietaryProfile/DietaryProfileForm';
 import ShoppingListList from './components/ShoppingLists/ShoppingListList';
 import ShoppingListDetail from './components/ShoppingLists/ShoppingListDetail';
 import NutritionForecast from './components/Forecast/NutritionForecast';
@@ -46,7 +45,6 @@ function App() {
             <Route path="/meal-plans" element={<MealPlanList />} />
             <Route path="/meal-plans/new" element={<MealPlanForm />} />
             <Route path="/meal-plans/:id/edit" element={<MealPlanForm />} />
-            <Route path="/dietary-profile" element={<DietaryProfileForm />} />
             <Route path="/shopping-lists" element={<ShoppingListList />} />
             <Route path="/shopping-lists/:id" element={<ShoppingListDetail />} />
             <Route path="/forecast" element={<NutritionForecast />} />

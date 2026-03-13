@@ -7,5 +7,5 @@ variable "aws_region" {
 variable "s3_bucket_name" {
   description = "S3 bucket name for frontend static hosting"
   type        = string
-  default     = "meal-planner-frontend-25173421"
+  default     = "smart-meal-planner-25173421"
 }

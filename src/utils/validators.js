@@ -5,6 +5,10 @@ import * as yup from 'yup';
  * Ensures client-side validation mirrors server-side constraints.
  */
 
+/* Helper: non-negative numeric field with a required label */
+const nonNegativeNumber = (label) =>
+  yup.number().required(`${label} is required`).min(0, `${label} must be non-negative`).typeError('Must be a number');
+
 /* Login form validation - username and password required */
 export const loginSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -33,15 +37,15 @@ export const recipeSchema = yup.object().shape({
 /* Ingredient form validation with non-negative nutritional values */
 export const ingredientSchema = yup.object().shape({
   name: yup.string().required('Name is required').max(100, 'Name must be at most 100 characters'),
-  calories: yup.number().required('Calories is required').min(0, 'Calories must be non-negative').typeError('Must be a number'),
-  protein: yup.number().required('Protein is required').min(0, 'Protein must be non-negative').typeError('Must be a number'),
-  carbs: yup.number().required('Carbs is required').min(0, 'Carbs must be non-negative').typeError('Must be a number'),
-  fat: yup.number().required('Fat is required').min(0, 'Fat must be non-negative').typeError('Must be a number'),
-  fiber: yup.number().required('Fiber is required').min(0, 'Fiber must be non-negative').typeError('Must be a number'),
-  vitaminA: yup.number().required('Vitamin A is required').min(0, 'Must be non-negative').typeError('Must be a number'),
-  vitaminC: yup.number().required('Vitamin C is required').min(0, 'Must be non-negative').typeError('Must be a number'),
-  calcium: yup.number().required('Calcium is required').min(0, 'Must be non-negative').typeError('Must be a number'),
-  iron: yup.number().required('Iron is required').min(0, 'Must be non-negative').typeError('Must be a number'),
+  calories: nonNegativeNumber('Calories'),
+  protein: nonNegativeNumber('Protein'),
+  carbs: nonNegativeNumber('Carbs'),
+  fat: nonNegativeNumber('Fat'),
+  fiber: nonNegativeNumber('Fiber'),
+  vitaminA: nonNegativeNumber('Vitamin A'),
+  vitaminC: nonNegativeNumber('Vitamin C'),
+  calcium: nonNegativeNumber('Calcium'),
+  iron: nonNegativeNumber('Iron'),
   unit: yup.string().required('Unit is required').max(50, 'Unit must be at most 50 characters'),
 });
 
@@ -50,14 +54,6 @@ export const mealPlanSchema = yup.object().shape({
   name: yup.string().required('Name is required').max(200, 'Name must be at most 200 characters'),
   startDate: yup.string().required('Start date is required'),
   endDate: yup.string().required('End date is required'),
-});
-
-/* Dietary profile validation with calorie goal range 500-10000 */
-export const dietaryProfileSchema = yup.object().shape({
-  calorieGoal: yup.number().required('Calorie goal is required').min(500, 'Calorie goal must be at least 500').max(10000, 'Calorie goal must be at most 10000').typeError('Must be a number'),
-  proteinGoal: yup.number().required('Protein goal is required').min(0, 'Must be non-negative').typeError('Must be a number'),
-  carbGoal: yup.number().required('Carb goal is required').min(0, 'Must be non-negative').typeError('Must be a number'),
-  fatGoal: yup.number().required('Fat goal is required').min(0, 'Must be non-negative').typeError('Must be a number'),
 });
 
 /* Shopping list form validation */

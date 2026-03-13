@@ -2,7 +2,8 @@
  * Confirm dialog component for delete actions and destructive operations.
  * Shows a modal overlay with cancel and confirm buttons.
  */
-function ConfirmDialog({ title, message, onConfirm, onCancel }) {
+function ConfirmDialog({ isOpen = true, title, message, onConfirm, onCancel }) {
+  if (!isOpen) return null;
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">

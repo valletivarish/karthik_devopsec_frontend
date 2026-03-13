@@ -34,7 +34,7 @@ function RegisterForm() {
       <div className="auth-card">
         <h1>Create Account</h1>
         <p className="subtitle">Join the Smart Recipe Meal Planner</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="fullName">Full Name</label>
             <input id="fullName" type="text" className={`form-control ${errors.fullName ? 'error' : ''}`}

@@ -57,10 +57,8 @@ function ShoppingListDetail() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {list.items.map(item => (
-              <div key={item.id} className={`shopping-item ${item.checked ? 'checked' : ''}`}
-                   onClick={() => toggleItem(item.id)} style={{ cursor: 'pointer' }}>
-                <input type="checkbox" checked={item.checked} onChange={() => toggleItem(item.id)}
-                       onClick={e => e.stopPropagation()} />
+              <div key={item.id} className={`shopping-item ${item.checked ? 'checked' : ''}`}>
+                <input type="checkbox" checked={item.checked} onChange={() => toggleItem(item.id)} />
                 <span style={{ flex: 1, textDecoration: item.checked ? 'line-through' : 'none',
                                opacity: item.checked ? 0.5 : 1 }}>
                   {item.ingredientName}

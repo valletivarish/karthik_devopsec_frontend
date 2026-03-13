@@ -2,9 +2,13 @@ name: Frontend CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
     branches: [main]
+
+defaults:
+  run:
+    working-directory: frontend
 
 jobs:
   ci:
@@ -20,6 +24,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -32,29 +37,32 @@ jobs:
 
       - name: Build production bundle
         run: npm run build
+        env:
+          VITE_API_BASE_URL: http://${{ secrets.EC2_HOST }}:8080
 
       - name: Trivy filesystem scan
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
-          scan-ref: '.'
+          scan-ref: './frontend'
           format: 'json'
           output: 'trivy-report.json'
           severity: 'HIGH,CRITICAL'
+          exit-code: '0'
 
       - name: Upload ESLint report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: eslint-report
-          path: eslint-report.json
+          path: frontend/eslint-report.json
 
       - name: Upload npm audit report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-audit-report
-          path: npm-audit-report.json
+          path: frontend/npm-audit-report.json
 
       - name: Upload Trivy report
         if: always()
@@ -67,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: dist/
+          path: frontend/dist/
 
   cd:
     name: Deploy to AWS S3
@@ -87,14 +95,14 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: eu-west-1
 
       - name: Deploy to S3
-        run: aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync dist/ s3://smart-meal-planner-25173421 --delete
 
       - name: Smoke test
         run: |
-          SITE_URL="http://${{ secrets.S3_BUCKET_NAME }}.s3-website-${{ secrets.AWS_REGION }}.amazonaws.com"
+          SITE_URL="http://smart-meal-planner-25173421.s3-website-eu-west-1.amazonaws.com"
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
           if [ "$STATUS" -eq 200 ] || [ "$STATUS" -eq 403 ]; then
             echo "Smoke test passed (HTTP $STATUS)"
