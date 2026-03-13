@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import forecastService from '../../services/forecastService';
 import LoadingSpinner from '../common/LoadingSpinner';
 
-const COLORS = { calories: '#4f46e5', protein: '#10b981', carbs: '#f59e0b', fat: '#ef4444' };
+const COLORS = { Calories: '#4f46e5', Protein: '#10b981', Carbs: '#f59e0b', Fat: '#ef4444' };
 
 /**
  * Nutritional forecast page showing ML-predicted trends using
@@ -45,7 +45,7 @@ function NutritionForecast() {
   const chartData = forecast.forecasts[0]?.predictedValues?.map((_, i) => {
     const point = { day: `Day ${i + 1}` };
     forecast.forecasts.forEach(f => {
-      point[f.nutrient] = Number(f.predictedValues[i]?.toFixed(1));
+      point[f.nutrientName] = Number(f.predictedValues[i]?.toFixed(1));
     });
     return point;
   }) || [];
@@ -57,9 +57,9 @@ function NutritionForecast() {
       {/* Confidence cards */}
       <div className="summary-cards">
         {forecast.forecasts.map(f => (
-          <div key={f.nutrient} className="summary-card">
-            <h3>{f.nutrient.charAt(0).toUpperCase() + f.nutrient.slice(1)}</h3>
-            <div className="summary-value" style={{ color: COLORS[f.nutrient] || 'var(--primary)' }}>
+          <div key={f.nutrientName} className="summary-card">
+            <h3>{f.nutrientName.charAt(0).toUpperCase() + f.nutrientName.slice(1)}</h3>
+            <div className="summary-value" style={{ color: COLORS[f.nutrientName] || 'var(--primary)' }}>
               {(f.confidence * 100).toFixed(0)}%
             </div>
             <p>R-squared confidence</p>
@@ -78,9 +78,9 @@ function NutritionForecast() {
             <Tooltip />
             <Legend />
             {forecast.forecasts.map(f => (
-              <Line key={f.nutrient} type="monotone" dataKey={f.nutrient}
-                    stroke={COLORS[f.nutrient] || '#8884d8'} strokeWidth={2} dot={{ r: 4 }}
-                    name={f.nutrient.charAt(0).toUpperCase() + f.nutrient.slice(1)} />
+              <Line key={f.nutrientName} type="monotone" dataKey={f.nutrientName}
+                    stroke={COLORS[f.nutrientName] || '#8884d8'} strokeWidth={2} dot={{ r: 4 }}
+                    name={f.nutrientName.charAt(0).toUpperCase() + f.nutrientName.slice(1)} />
             ))}
           </LineChart>
         </ResponsiveContainer>
@@ -94,7 +94,7 @@ function NutritionForecast() {
             <tr>
               <th>Day</th>
               {forecast.forecasts.map(f => (
-                <th key={f.nutrient}>{f.nutrient.charAt(0).toUpperCase() + f.nutrient.slice(1)}</th>
+                <th key={f.nutrientName}>{f.nutrientName.charAt(0).toUpperCase() + f.nutrientName.slice(1)}</th>
               ))}
             </tr>
           </thead>
@@ -103,7 +103,7 @@ function NutritionForecast() {
               <tr key={i}>
                 <td>{row.day}</td>
                 {forecast.forecasts.map(f => (
-                  <td key={f.nutrient}>{row[f.nutrient]}</td>
+                  <td key={f.nutrientName}>{row[f.nutrientName]}</td>
                 ))}
               </tr>
             ))}
