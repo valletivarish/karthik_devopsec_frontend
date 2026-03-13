@@ -60,7 +60,7 @@ function NutritionForecast() {
           <div key={f.nutrientName} className="summary-card">
             <h3>{f.nutrientName.charAt(0).toUpperCase() + f.nutrientName.slice(1)}</h3>
             <div className="summary-value" style={{ color: COLORS[f.nutrientName] || 'var(--primary)' }}>
-              {(f.confidence * 100).toFixed(0)}%
+              {((f.rsquared ?? f.confidence ?? 0) * 100).toFixed(0)}%
             </div>
             <p>R-squared confidence</p>
           </div>
