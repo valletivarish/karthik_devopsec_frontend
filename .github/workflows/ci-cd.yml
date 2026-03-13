@@ -33,7 +33,7 @@ jobs:
       - name: Build production bundle
         run: npm run build
         env:
-          VITE_API_BASE_URL: http://${{ secrets.EC2_HOST }}:8080
+          VITE_API_URL: http://18.200.158.31:8080
 
       - name: Trivy filesystem scan
         uses: aquasecurity/trivy-action@master
