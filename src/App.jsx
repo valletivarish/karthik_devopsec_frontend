@@ -7,13 +7,16 @@ import ProtectedRoute from './components/Auth/ProtectedRoute';
 import MainLayout from './components/Layout/MainLayout';
 import Dashboard from './components/Dashboard/Dashboard';
 import RecipeList from './components/Recipes/RecipeList';
+import RecipeDetail from './components/Recipes/RecipeDetail';
 import RecipeForm from './components/Recipes/RecipeForm';
 import IngredientList from './components/Ingredients/IngredientList';
 import IngredientForm from './components/Ingredients/IngredientForm';
 import MealPlanList from './components/MealPlans/MealPlanList';
+import MealPlanDetail from './components/MealPlans/MealPlanDetail';
 import MealPlanForm from './components/MealPlans/MealPlanForm';
 import ShoppingListList from './components/ShoppingLists/ShoppingListList';
 import ShoppingListDetail from './components/ShoppingLists/ShoppingListDetail';
+import ShoppingListForm from './components/ShoppingLists/ShoppingListForm';
 import NutritionForecast from './components/Forecast/NutritionForecast';
 
 /**
@@ -38,15 +41,19 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/recipes" element={<RecipeList />} />
             <Route path="/recipes/new" element={<RecipeForm />} />
+            <Route path="/recipes/:id" element={<RecipeDetail />} />
             <Route path="/recipes/:id/edit" element={<RecipeForm />} />
             <Route path="/ingredients" element={<IngredientList />} />
             <Route path="/ingredients/new" element={<IngredientForm />} />
             <Route path="/ingredients/:id/edit" element={<IngredientForm />} />
             <Route path="/meal-plans" element={<MealPlanList />} />
             <Route path="/meal-plans/new" element={<MealPlanForm />} />
+            <Route path="/meal-plans/:id" element={<MealPlanDetail />} />
             <Route path="/meal-plans/:id/edit" element={<MealPlanForm />} />
             <Route path="/shopping-lists" element={<ShoppingListList />} />
+            <Route path="/shopping-lists/new" element={<ShoppingListForm />} />
             <Route path="/shopping-lists/:id" element={<ShoppingListDetail />} />
+            <Route path="/shopping-lists/:id/edit" element={<ShoppingListForm />} />
             <Route path="/forecast" element={<NutritionForecast />} />
           </Route>
         </Route>

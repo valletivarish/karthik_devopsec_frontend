@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiPlus, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi';
+import { FiPlus, FiEye, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi';
 import recipeService from '../../services/recipeService';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ConfirmDialog from '../common/ConfirmDialog';
@@ -89,6 +89,7 @@ function RecipeList() {
                   <td>{recipe.totalCalories} kcal</td>
                   <td>{recipe.totalProtein}g</td>
                   <td className="actions-cell">
+                    <Link to={`/recipes/${recipe.id}`} className="btn btn-sm btn-outline"><FiEye /></Link>
                     <Link to={`/recipes/${recipe.id}/edit`} className="btn btn-sm btn-outline"><FiEdit2 /></Link>
                     <button className="btn btn-sm btn-danger" onClick={() => setDeleteId(recipe.id)}><FiTrash2 /></button>
                   </td>

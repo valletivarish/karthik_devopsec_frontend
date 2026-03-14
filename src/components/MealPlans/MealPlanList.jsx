@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiPlus, FiEdit2, FiTrash2, FiCalendar } from 'react-icons/fi';
+import { FiPlus, FiEye, FiEdit2, FiTrash2, FiCalendar } from 'react-icons/fi';
 import mealPlanService from '../../services/mealPlanService';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ConfirmDialog from '../common/ConfirmDialog';
@@ -69,6 +69,7 @@ function MealPlanList() {
                   <td>{plan.entries?.length || 0}</td>
                   <td>
                     <div style={{ display: 'flex', gap: 8 }}>
+                      <Link to={`/meal-plans/${plan.id}`} className="btn btn-outline btn-sm"><FiEye /></Link>
                       <Link to={`/meal-plans/${plan.id}/edit`} className="btn btn-outline btn-sm"><FiEdit2 /></Link>
                       <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(plan)}><FiTrash2 /></button>
                     </div>

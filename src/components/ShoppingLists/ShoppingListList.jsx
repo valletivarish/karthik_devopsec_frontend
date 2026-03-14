@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiPlus, FiEye, FiTrash2, FiShoppingCart } from 'react-icons/fi';
+import { FiPlus, FiEye, FiEdit2, FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import shoppingListService from '../../services/shoppingListService';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ConfirmDialog from '../common/ConfirmDialog';
@@ -71,6 +71,7 @@ function ShoppingListList() {
                     <td>
                       <div style={{ display: 'flex', gap: 8 }}>
                         <Link to={`/shopping-lists/${list.id}`} className="btn btn-outline btn-sm"><FiEye /></Link>
+                        <Link to={`/shopping-lists/${list.id}/edit`} className="btn btn-outline btn-sm"><FiEdit2 /></Link>
                         <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(list)}><FiTrash2 /></button>
                       </div>
                     </td>
