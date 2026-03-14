@@ -56,6 +56,16 @@ export const mealPlanSchema = yup.object().shape({
   endDate: yup.string().required('End date is required'),
 });
 
+/* Dietary profile form validation with non-negative goals */
+export const dietaryProfileSchema = yup.object().shape({
+  calorieGoal: nonNegativeNumber('Calorie goal'),
+  proteinGoal: nonNegativeNumber('Protein goal'),
+  carbsGoal: nonNegativeNumber('Carbs goal'),
+  fatGoal: nonNegativeNumber('Fat goal'),
+  allergies: yup.string(),
+  dietaryRestrictions: yup.string(),
+});
+
 /* Shopping list form validation */
 export const shoppingListSchema = yup.object().shape({
   name: yup.string().required('Name is required').max(200, 'Name must be at most 200 characters'),

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FiGrid, FiBook, FiPackage, FiCalendar, FiShoppingCart, FiTrendingUp } from 'react-icons/fi';
+import { FiGrid, FiBook, FiPackage, FiCalendar, FiShoppingCart, FiTrendingUp, FiUser } from 'react-icons/fi';
 
 /**
  * Sidebar navigation component with links to all main pages.
@@ -13,6 +13,7 @@ function Sidebar() {
     { to: '/ingredients', icon: <FiPackage />, label: 'Ingredients' },
     { to: '/meal-plans', icon: <FiCalendar />, label: 'Meal Plans' },
     { to: '/shopping-lists', icon: <FiShoppingCart />, label: 'Shopping Lists' },
+    { to: '/dietary-profile', icon: <FiUser />, label: 'Dietary Profile' },
     { to: '/forecast', icon: <FiTrendingUp />, label: 'Nutrition Forecast' },
   ];
 

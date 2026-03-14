@@ -18,6 +18,7 @@ import ShoppingListList from './components/ShoppingLists/ShoppingListList';
 import ShoppingListDetail from './components/ShoppingLists/ShoppingListDetail';
 import ShoppingListForm from './components/ShoppingLists/ShoppingListForm';
 import NutritionForecast from './components/Forecast/NutritionForecast';
+import DietaryProfileForm from './components/DietaryProfile/DietaryProfileForm';
 
 /**
  * Main App component defining all application routes.
@@ -54,6 +55,7 @@ function App() {
             <Route path="/shopping-lists/new" element={<ShoppingListForm />} />
             <Route path="/shopping-lists/:id" element={<ShoppingListDetail />} />
             <Route path="/shopping-lists/:id/edit" element={<ShoppingListForm />} />
+            <Route path="/dietary-profile" element={<DietaryProfileForm />} />
             <Route path="/forecast" element={<NutritionForecast />} />
           </Route>
         </Route>
