@@ -28,7 +28,7 @@ function DietaryProfileForm() {
         reset({
           calorieGoal: response.data.calorieGoal,
           proteinGoal: response.data.proteinGoal,
-          carbsGoal: response.data.carbsGoal,
+          carbGoal: response.data.carbGoal,
           fatGoal: response.data.fatGoal,
           allergies: response.data.allergies?.join(', ') || '',
           dietaryRestrictions: response.data.dietaryRestrictions?.join(', ') || '',
@@ -84,8 +84,8 @@ function DietaryProfileForm() {
             </div>
             <div className="form-group">
               <label>Carbs Goal (g)</label>
-              <input type="number" step="0.1" className={`form-control ${errors.carbsGoal ? 'error' : ''}`} {...register('carbsGoal')} placeholder="250" />
-              {errors.carbsGoal && <p className="error-message">{errors.carbsGoal.message}</p>}
+              <input type="number" step="0.1" className={`form-control ${errors.carbGoal ? 'error' : ''}`} {...register('carbGoal')} placeholder="250" />
+              {errors.carbGoal && <p className="error-message">{errors.carbGoal.message}</p>}
             </div>
             <div className="form-group">
               <label>Fat Goal (g)</label>

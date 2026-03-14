@@ -60,7 +60,7 @@ export const mealPlanSchema = yup.object().shape({
 export const dietaryProfileSchema = yup.object().shape({
   calorieGoal: nonNegativeNumber('Calorie goal'),
   proteinGoal: nonNegativeNumber('Protein goal'),
-  carbsGoal: nonNegativeNumber('Carbs goal'),
+  carbGoal: nonNegativeNumber('Carbs goal'),
   fatGoal: nonNegativeNumber('Fat goal'),
   allergies: yup.string(),
   dietaryRestrictions: yup.string(),
