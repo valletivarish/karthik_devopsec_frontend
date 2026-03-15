@@ -33,7 +33,7 @@ jobs:
       - name: Build production bundle
         run: npm run build
         env:
-          VITE_API_URL: http://18.200.158.31:8080
+          VITE_API_URL: http://34.247.209.44:8080
 
       - name: Trivy filesystem scan
         uses: aquasecurity/trivy-action@master
@@ -93,11 +93,11 @@ jobs:
           aws-region: eu-west-1
 
       - name: Deploy to S3
-        run: aws s3 sync dist/ s3://smart-meal-planner-25173421 --delete
+        run: aws s3 sync dist/ s3://smart-meal-planner-25160052 --delete
 
       - name: Smoke test
         run: |
-          SITE_URL="http://smart-meal-planner-25173421.s3-website-eu-west-1.amazonaws.com"
+          SITE_URL="http://smart-meal-planner-25160052.s3-website-eu-west-1.amazonaws.com"
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
           if [ "$STATUS" -eq 200 ] || [ "$STATUS" -eq 403 ]; then
             echo "Smoke test passed (HTTP $STATUS)"
