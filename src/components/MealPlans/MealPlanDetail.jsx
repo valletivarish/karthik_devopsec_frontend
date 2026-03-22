@@ -90,7 +90,7 @@ function MealPlanDetail() {
             </thead>
             <tbody>
               {days.map(day => (
-                <tr key={day} style={isToday(day) ? { backgroundColor: 'var(--primary)', color: '#fff' } : {}}>
+                <tr key={day} className={isToday(day) ? 'today-row' : ''} style={isToday(day) ? { backgroundColor: 'var(--primary)', color: '#fff' } : {}}>
                   <td><strong>{day.charAt(0) + day.slice(1).toLowerCase()}{isToday(day) ? ' (Today)' : ''}</strong></td>
                   {mealTypes.map(meal => {
                     const entry = getEntry(day, meal);
