@@ -43,7 +43,7 @@ function MealPlanDetail() {
       nextEnd.setDate(nextEnd.getDate() + 6);
       const formatDate = (d) => d.toISOString().split('T')[0];
       const newPlan = {
-        name: `${plan.name} (Next Week)`,
+        name: `Meal Plan ${formatDate(nextStart)} to ${formatDate(nextEnd)}`,
         startDate: formatDate(nextStart),
         endDate: formatDate(nextEnd),
         entries: (plan.entries || []).map(e => ({
