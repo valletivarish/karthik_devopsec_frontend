@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { FiBook, FiCalendar, FiPackage, FiShoppingCart } from 'react-icons/fi';
 import dashboardService from '../../services/dashboardService';
@@ -15,12 +16,9 @@ const COLORS = ['#2563eb', '#059669', '#d97706', '#dc2626'];
 function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
-  useEffect(() => {
-    loadDashboard();
-  }, []);
-
-  const loadDashboard = async () => {
+  const loadDashboard = useCallback(async () => {
     try {
       const response = await dashboardService.getDashboard();
       setData(response.data);
@@ -30,7 +28,11 @@ function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadDashboard();
+  }, [location.key, loadDashboard]);
 
   if (loading) return <LoadingSpinner message="Loading dashboard..." />;
 
