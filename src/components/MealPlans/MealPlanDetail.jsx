@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiEdit2, FiArrowLeft } from 'react-icons/fi';
+import { FiEdit2, FiArrowLeft, FiCopy } from 'react-icons/fi';
 import mealPlanService from '../../services/mealPlanService';
 import LoadingSpinner from '../common/LoadingSpinner';
 
@@ -29,11 +29,46 @@ function MealPlanDetail() {
 
   const getEntry = (day, meal) => plan.entries?.find(e => e.dayOfWeek === day && e.mealType === meal);
 
+  const today = new Date();
+  const todayDayName = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'][today.getDay()];
+  const planStart = new Date(plan.startDate);
+  const planEnd = new Date(plan.endDate);
+  const isTodayInRange = today >= planStart && today <= planEnd;
+  const isToday = (day) => isTodayInRange && day === todayDayName;
+
+  const extendToNextWeek = async () => {
+    try {
+      const nextStart = new Date(planEnd);
+      nextStart.setDate(nextStart.getDate() + 1);
+      const nextEnd = new Date(nextStart);
+      nextEnd.setDate(nextEnd.getDate() + 6);
+      const formatDate = (d) => d.toISOString().split('T')[0];
+      const newPlan = {
+        name: `${plan.name} (Next Week)`,
+        startDate: formatDate(nextStart),
+        endDate: formatDate(nextEnd),
+        entries: (plan.entries || []).map(e => ({
+          dayOfWeek: e.dayOfWeek,
+          mealType: e.mealType,
+          recipeId: e.recipeId
+        }))
+      };
+      const response = await mealPlanService.create(newPlan);
+      toast.success('Meal plan extended to next week!');
+      navigate(`/meal-plans/${response.data.id}`);
+    } catch {
+      toast.error('Failed to extend meal plan');
+    }
+  };
+
   return (
     <div>
       <div className="page-header">
         <h1>{plan.name}</h1>
-        <Link to={`/meal-plans/${id}/edit`} className="btn btn-primary"><FiEdit2 /> Edit</Link>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className="btn btn-outline" onClick={extendToNextWeek}><FiCopy /> Extend to Next Week</button>
+          <Link to={`/meal-plans/${id}/edit`} className="btn btn-primary"><FiEdit2 /> Edit</Link>
+        </div>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
@@ -56,8 +91,8 @@ function MealPlanDetail() {
             </thead>
             <tbody>
               {days.map(day => (
-                <tr key={day}>
-                  <td><strong>{day.charAt(0) + day.slice(1).toLowerCase()}</strong></td>
+                <tr key={day} style={isToday(day) ? { backgroundColor: 'var(--primary)', color: '#fff' } : {}}>
+                  <td><strong>{day.charAt(0) + day.slice(1).toLowerCase()}{isToday(day) ? ' (Today)' : ''}</strong></td>
                   {mealTypes.map(meal => {
                     const entry = getEntry(day, meal);
                     return (

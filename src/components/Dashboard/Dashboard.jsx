@@ -43,7 +43,7 @@ function Dashboard() {
   return (
     <div>
       <div className="page-header">
-        <h1>Dashboard</h1>
+        <h1>My Dashboard</h1>
       </div>
 
       {/* Summary statistics cards showing entity counts */}
