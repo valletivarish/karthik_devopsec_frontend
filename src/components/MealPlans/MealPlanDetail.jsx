@@ -38,11 +38,8 @@ function MealPlanDetail() {
   const extendToNextWeek = async () => {
     try {
       const formatDate = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-      const now = new Date();
-      const dayOfWeek = now.getDay();
-      const daysUntilMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
-      const nextStart = new Date(now);
-      nextStart.setDate(now.getDate() + daysUntilMonday);
+      const nextStart = new Date(plan.endDate + 'T00:00:00');
+      nextStart.setDate(nextStart.getDate() + 1);
       const nextEnd = new Date(nextStart);
       nextEnd.setDate(nextStart.getDate() + 6);
       const newPlan = {
