@@ -31,9 +31,8 @@ function MealPlanDetail() {
 
   const today = new Date();
   const todayDayName = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'][today.getDay()];
-  const planStart = new Date(plan.startDate);
-  const planEnd = new Date(plan.endDate);
-  const isTodayInRange = today >= planStart && today <= planEnd;
+  const todayStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+  const isTodayInRange = todayStr >= plan.startDate && todayStr <= plan.endDate;
   const isToday = (day) => isTodayInRange && day === todayDayName;
 
   const extendToNextWeek = async () => {
