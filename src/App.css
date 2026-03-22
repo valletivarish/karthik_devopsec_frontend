@@ -363,7 +363,8 @@ td {
 
 tr:last-child td { border-bottom: none; }
 tbody tr:hover td { background: #FAFAFA; }
-tbody tr.today-row:hover td { background: var(--primary-dark); color: #fff; }
+tbody tr.today-row td { background: var(--primary); color: #fff !important; }
+tbody tr.today-row:hover td { background: var(--primary-dark); color: #fff !important; }
 
 .actions-cell { display: flex; gap: 8px; align-items: center; }
 
