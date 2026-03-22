@@ -37,7 +37,7 @@ function MealPlanDetail() {
 
   const extendToNextWeek = async () => {
     try {
-      const nextStart = new Date(planEnd);
+      const nextStart = new Date(plan.endDate);
       nextStart.setDate(nextStart.getDate() + 1);
       const nextEnd = new Date(nextStart);
       nextEnd.setDate(nextEnd.getDate() + 6);
