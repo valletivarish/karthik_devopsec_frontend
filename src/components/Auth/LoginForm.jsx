@@ -45,7 +45,7 @@ function LoginForm() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1>Welcome Back!</h1>
+        <h1>Welcome Back</h1>
         <p className="subtitle">Sign in to your Meal Planner account</p>
 
         {/* Demo account quick-fill */}
