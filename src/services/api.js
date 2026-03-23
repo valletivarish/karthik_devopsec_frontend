@@ -5,7 +5,7 @@ import axios from 'axios';
  * Automatically attaches Bearer token to all outgoing requests.
  * Handles 401 responses by clearing auth state and redirecting to login.
  */
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const api = axios.create({
   baseURL: API_URL,
