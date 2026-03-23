@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiEdit2, FiArrowLeft, FiCopy } from 'react-icons/fi';
+import { FiArrowLeft, FiCopy } from 'react-icons/fi';
 import mealPlanService from '../../services/mealPlanService';
 import LoadingSpinner from '../common/LoadingSpinner';
 
@@ -64,10 +64,7 @@ function MealPlanDetail() {
     <div>
       <div className="page-header">
         <h1>{plan.name}</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn btn-outline" onClick={extendToNextWeek}><FiCopy /> Extend to Next Week</button>
-          <Link to={`/meal-plans/${id}/edit`} className="btn btn-primary"><FiEdit2 /> Edit</Link>
-        </div>
+        <button className="btn btn-outline" onClick={extendToNextWeek}><FiCopy /> Extend to Next Week</button>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>

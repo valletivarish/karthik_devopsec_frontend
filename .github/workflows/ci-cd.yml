@@ -33,7 +33,7 @@ jobs:
       - name: Build production bundle
         run: npm run build
         env:
-          VITE_API_URL: http://34.247.209.44:8080
+          VITE_API_URL: ""
 
       - name: Trivy filesystem scan
         uses: aquasecurity/trivy-action@master
@@ -95,13 +95,36 @@ jobs:
       - name: Deploy to S3
         run: aws s3 sync dist/ s3://smart-meal-planner-25160052 --delete
 
+      - name: Invalidate CloudFront cache
+        run: |
+          DIST_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Origins.Items[?DomainName=='smart-meal-planner-25160052.s3.eu-west-1.amazonaws.com']].Id" \
+            --output text)
+          if [ -n "$DIST_ID" ]; then
+            aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
+            echo "CloudFront cache invalidated for distribution $DIST_ID"
+          else
+            echo "No CloudFront distribution found, skipping invalidation"
+          fi
+
       - name: Smoke test
         run: |
-          SITE_URL="http://smart-meal-planner-25160052.s3-website-eu-west-1.amazonaws.com"
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
-          if [ "$STATUS" -eq 200 ] || [ "$STATUS" -eq 403 ]; then
-            echo "Smoke test passed (HTTP $STATUS)"
+          CF_DOMAIN=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?Origins.Items[?DomainName=='smart-meal-planner-25160052.s3.eu-west-1.amazonaws.com']].DomainName" \
+            --output text)
+          if [ -n "$CF_DOMAIN" ] && [ "$CF_DOMAIN" != "None" ]; then
+            SITE_URL="https://$CF_DOMAIN"
           else
-            echo "Smoke test failed (HTTP $STATUS)"
-            exit 1
+            SITE_URL="http://smart-meal-planner-25160052.s3-website-eu-west-1.amazonaws.com"
           fi
+          for i in 1 2 3 4 5; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
+            if [ "$STATUS" -eq 200 ]; then
+              echo "Smoke test passed (HTTP $STATUS) at $SITE_URL"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $STATUS, waiting..."
+            sleep 10
+          done
+          echo "Smoke test failed"
+          exit 1

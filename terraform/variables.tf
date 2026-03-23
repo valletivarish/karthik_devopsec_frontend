@@ -9,3 +9,9 @@ variable "s3_bucket_name" {
   type        = string
   default     = "smart-meal-planner-25160052"
 }
+
+variable "ec2_public_dns" {
+  description = "Public DNS hostname of the EC2 backend server"
+  type        = string
+  default     = "ec2-34-247-209-44.eu-west-1.compute.amazonaws.com"
+}
